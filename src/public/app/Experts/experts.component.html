@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row grid-container">
+        <header>
+            <h3>
+                <span class="glyphicon glyphicon-user"></span>
+                {{ title }}
+            </h3>
+        </header>
+        <br />
+        <div class="row">
+            <div class="col-md-8">
+                <div class="navbar">
+                    <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <a class="btn btn-default" [routerLink]="['/experts', '0']">Add New Subject Expert</a>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-md-10">
+            <div class="table">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th (click)="sort('firstName')">First Name</th>
+                            <th (click)="sort('lastName')">Last Name</th>
+                            <th (click)="sort('subject')">Subject</th>
+                            <th (click)="sort('country')">Country</th>
+                        </tr>
+                    </thead>
+                   <tbody>
+                        <tr *ngFor="let expert of filteredExperts; trackBy:trackby.expert">
+                            <td><img src="images/{{expert.firstName}}.png"
+                                onerror="this.onerror=null; src ='images/srisri.jpg'"
+                                class="card-image" alt="Customer Image" /></td>
+                            <td><a [routerLink]="['/experts',expert._id]" style="color: #0000cc">{{ expert.firstName }}</a></td>
+                            <td style="color: #0000cc">{{ expert.lastName }}</td>
+                            <td style="color: #993366">{{ expert.subject }}</td>
+                            <td style="color: #e60000">{{ expert.country | capitalize}}</td>
+                        </tr>
+                        <tr *ngIf="!experts.length">
+                            <td>&nbsp;</td>
+                            <td colspan="6">No Records Found</td>
+                        </tr>
+                    </tbody>
+             </table>
+            </div>
+        </div>
+    </div>
+    <pagination [totalItems]="totalRecords" 
+            [pageSize]="pageSize" 
+            (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+</div>
